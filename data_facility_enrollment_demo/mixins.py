@@ -27,9 +27,7 @@ class TransferUtils(View):
             log.error(f"Request CSRF {token}, stored CSRF {session_csrf}")
             # If there was a previous task, clear it out.
             self.set_task({})
-            raise CSRFValidationFailure(
-                "Request Token does not " "match stored token."
-            )
+            raise CSRFValidationFailure("Request Token does not " "match stored token.")
         log.debug("CSRF validation PASSED.")
 
     def set_session_csrf_token(self, token):
@@ -84,10 +82,7 @@ class HelperPageMixin(TransferUtils):
         url_name = resolve(self.request.path_info).url_name
         return reverse(
             url_name,
-            args=[
-                self.kwargs.get("index", None),
-                self.kwargs.get("subject", None)
-            ]
+            args=[self.kwargs.get("index", None), self.kwargs.get("subject", None)],
         )
 
     def get_helper_page_url(self):
@@ -108,10 +103,7 @@ class HelperPageMixin(TransferUtils):
         index_data = get_index(self.kwargs.get("index"))
         cancel_url = self.request.build_absolute_uri()
         hp_params.update(
-            {
-                "label": f'{index_data["name"]} Transfer',
-                "cancelurl": cancel_url
-            }
+            {"label": f'{index_data["name"]} Transfer', "cancelurl": cancel_url}
         )
         hp_params_enc = urlencode(hp_params)
 
@@ -124,14 +116,7 @@ class HelperPageMixin(TransferUtils):
         # Encode the full action param url and add it to the other helper page
         # URLs
         base_url = urlunparse(
-            (
-                self.request.scheme,
-                self.get_host(),
-                self.get_redirect_url(),
-                "",
-                "",
-                ""
-            )
+            (self.request.scheme, self.get_host(), self.get_redirect_url(), "", "", "")
         )
         redirect_url = "{}?{}".format(base_url, action_param_param)
         action_param = urlencode({"action": redirect_url})
