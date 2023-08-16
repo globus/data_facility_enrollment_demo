@@ -1,5 +1,6 @@
 ### Python template
 
+sqlite
 *.sqlite*
 *.sqlite3
 static/
