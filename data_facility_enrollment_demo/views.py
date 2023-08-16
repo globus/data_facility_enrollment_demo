@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from data_facility_enrollment_demo.arc_api import ARCClient
 
 from data_facility_enrollment_demo.gcs import (
     lookup_guest_collections,
     create_acl,
-    get_available_mapped_collections,
     verify_valid_guest_collection,
 )
 from data_facility_enrollment_demo.search import create_search_record
@@ -44,7 +44,7 @@ def onboarding(request):
 @login_required
 def create_guest_collection(request):
     context = {
-        "mapped_collections": get_available_mapped_collections(),
+        "mapped_collections": settings.AVAILABLE_MAPPED_COLLECTIONS,
     }
     if request.method == "POST":
         form = OnboardingForm(request.POST)

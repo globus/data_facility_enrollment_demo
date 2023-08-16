@@ -121,7 +121,15 @@ SOCIAL_AUTH_GLOBUS_SCOPE = [
 
 SOCIAL_AUTH_GLOBUS_KEY = "<redacted>"
 SOCIAL_AUTH_GLOBUS_SECRET = "<redacted>`"
-SEARCH_INDEX_UUID = '8c47de5e-a969-4912-abd5-c29130ae526e'
+SEARCH_INDEX_UUID = "8c47de5e-a969-4912-abd5-c29130ae526e"
+AVAILABLE_MAPPED_COLLECTIONS = [
+    {
+        "uuid": "9da7942b-3fae-4ce9-b930-a335e41382cd",
+        "name": "(Nick's collection) Mock Turbo Active Compute Storage",
+        "tag": "arc_collection",
+    },
+]
+
 
 LOGGING = {
     "version": 1,

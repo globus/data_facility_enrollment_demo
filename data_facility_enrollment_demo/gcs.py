@@ -29,19 +29,6 @@ def lookup_guest_collections(user: User, keyword="arc_collection"):
     return guest_collections
 
 
-def get_available_mapped_collections():
-    """
-    Get a list of mapped collections which can be used my the app to create guest collections for the user.
-    """
-    return [
-        {
-            "uuid": "9da7942b-3fae-4ce9-b930-a335e41382cd",
-            "name": "(Nick's collection) Mock Turbo Active Compute Storage",
-            "tag": "arc_collection",
-        },
-    ]
-
-
 def verify_valid_guest_collection():
     log.error("We currently do not check if a guest collection has the proper ACL")
     return False
