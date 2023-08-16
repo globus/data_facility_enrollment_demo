@@ -17,7 +17,7 @@
 
     {% for collection in guest_collections %} 
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="guest_collection" id="guest_collection" value="{{collection.host_endpoint_id}}">
+        <input class="form-check-input" type="radio" name="guest_collection" id="guest_collection" value="{{collection.id}}">
         <label class="form-check-label" for="guest_collection">
           {{collection.display_name}}
         </label>

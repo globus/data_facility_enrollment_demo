@@ -31,7 +31,7 @@ def onboarding(request):
         if form.is_valid():
             if form.cleaned_data["guest_collection"] == "create_new":
                 return redirect("create-guest-collection")
-            elif verify_valid_guest_collection():
+            elif verify_valid_guest_collection(request.user, form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_GROUP):
                 return redirect("onboarding-complete")
             else:
                 context["errors"] = "Guest collection is invalid!"
