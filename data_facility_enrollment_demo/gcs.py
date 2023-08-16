@@ -44,4 +44,4 @@ def create_acl(user: User, identity_id: str, endpoint_id: str, path: str, permis
         rule_id = result["access_id"]
         return rule_id
     except GlobusAPIError as e:
-        raise e.message
+        raise RuntimeError(e.message)
