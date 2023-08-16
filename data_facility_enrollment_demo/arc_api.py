@@ -17,7 +17,7 @@ class ARCClient(object):
             return json.load(f)
 
     def get_projects(self):
-        self.load_json(settings.ARC_PROJECT_FILE)
+        return self.load_json(settings.ARC_PROJECT_FILE)
 
     def get_storage(self):
-        self.load_json(settings.ARC_STORAGE_FILE)
+        return self.load_json(settings.ARC_STORAGE_FILE)

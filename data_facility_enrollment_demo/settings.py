@@ -141,6 +141,8 @@ AVAILABLE_MAPPED_COLLECTIONS = [
         "tag": "arc_collection",
     },
 ]
+GUEST_COLLECTION_REQUIRED_GROUP = "160aac2d-3c58-11ee-a544-6b4261604b9c"
+GUEST_COLLECTION_REQUIRED_KEYWORD = "arc_collection"
 
 
 LOGGING = {

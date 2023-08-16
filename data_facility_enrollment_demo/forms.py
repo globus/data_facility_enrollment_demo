@@ -2,6 +2,7 @@ from django import forms
 
 
 class OnboardingForm(forms.Form):
+    project = forms.CharField(label="Project", max_length=256)
     guest_collection = forms.CharField(
         label="Guest Collection", max_length=256)
 

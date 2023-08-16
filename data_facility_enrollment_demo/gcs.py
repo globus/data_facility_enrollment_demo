@@ -1,3 +1,4 @@
+from data_facility_enrollment_demo.exc import MissingKeyword
 from globus_portal_framework.gclients import load_transfer_client
 import logging
 from globus_sdk import (
@@ -19,7 +20,7 @@ from globus_portal_framework.gclients import load_globus_access_token
 log = logging.getLogger(__name__)
 
 
-def lookup_guest_collections(user: User, keyword="arc_collection"):
+def lookup_guest_collections(user: User, keyword: str):
     """Return a list of guest collections that contain the specified keyword
     Arguments:
         user -- Django User object
@@ -41,9 +42,44 @@ def lookup_guest_collections(user: User, keyword="arc_collection"):
     return guest_collections
 
 
-def verify_valid_guest_collection():
-    log.error("We currently do not check if a guest collection has the proper ACL")
-    return False
+def verify_guest_collection_permissions(user: User, collection_id: str, group: str, permissions: str = 'rw'):
+    """ Returns true if the guest collection has an ACL that matches parameters, or false otherwise
+    Arguments:
+       user -- Django User object
+       collection_id -- Collection id to verify collection permissions
+       group -- Group wich is being asserted access
+       permissions -- 'rw' for read-write
+    """
+    transfer_client: TransferClient = load_transfer_client(user)
+
+    acl_rules = transfer_client.endpoint_acl_list(collection_id)
+    for acl_rule in acl_rules:
+        if acl_rule['principal'] == group and acl_rule['permissions'] == permissions:
+            return True
+
+    log.warning(f'No ACL rule exists for group {group}')
+    rule_data = {
+        "DATA_TYPE": "access",
+        "principal_type": "group",
+        "principal": group,
+        "path": "/",
+        "permissions": "rw",
+    }
+    transfer_client.add_endpoint_acl_rule(collection_id, rule_data)
+    log.info(f'Added {group} to collection {collection_id}...')
+    return True
+
+
+def verify_guest_collection_keywords(user: User, collection_id: str, keyword):
+    """
+    Ensure guest collection contains keywords. It shouldn't be possible to fail here, since only collections
+    returned in the get function above select for collections containing the required keywords
+    """
+    transfer_client: TransferClient = load_transfer_client(user)
+    data = transfer_client.get_endpoint(collection_id)
+
+    if not data['keywords'] or keyword not in data['keywords']:
+        raise MissingKeyword('Missing Keyword on collection')
 
 
 def create_acl(

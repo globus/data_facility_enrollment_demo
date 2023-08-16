@@ -21,7 +21,12 @@
             {% endblock %}
   
             {% if form.is_bound and form.errors or errors %}
-            <div class="alert alert-danger my-3" role="alert">{{form.errors}}{{errors}}</div>
+            <div class="alert alert-danger my-3" role="alert">{{form.errors}}{{errors}}
+                {% if error_link %}
+                <p>Please fix the error at the <a href="{{error_link}}">location here.</p>
+                {% endif %}
+            </div>
+
             {% endif %}
           </div>
         </div>
