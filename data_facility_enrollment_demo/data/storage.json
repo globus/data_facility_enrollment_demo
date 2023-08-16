@@ -1,0 +1,433 @@
+[
+    {
+      "dn": "cn=raeker1-turbo,ou=User Groups,ou=Groups,dc=umich,dc=edu",
+      "cn": [
+        "raeker1-turbo",
+        "raeker1-trubo",
+        "arcts-raeker1-turbo-raeker1",
+        "arcts-raeker1-turbo-raeker5",
+        "raeker-turbo",
+        "123e4567-e89b-12d3-a456-426614174000"
+      ],
+      "gidNumber": "2396851",
+      "groupName": "arcts-raeker1-turbo-raeker1",
+      "description": "group for access to raeker1 turbo volume.",
+      "mcommunityUsers": {
+        "users": [
+          "adnanzai",
+          "brockp",
+          "cmarisol",
+          "jhallum",
+          "jophill",
+          "jshelly",
+          "mmatola",
+          "msbritt",
+          "muludag",
+          "raeker",
+          "richeym",
+          "wgx"
+        ],
+        "allSubgroups": [
+          "arcts-raeker1-admins",
+          "arcts-helpdesk",
+          "hpc-systems"
+        ],
+        "subgroups": []
+      },
+      "turboVolName": "raeker1",
+      "isAdmin": true,
+      "multiZones": [
+        {
+          "nfsAlias": "/raeker1",
+          "volPath": "/ifs/macc-turbo2/mcomm-adsroot/repl/nfs-mp/r/raeker1",
+          "zone": "mcomm-adsroot"
+        }
+      ],
+      "nfsAlias": "/raeker1",
+      "volPath": "/ifs/macc-turbo2/mcomm-adsroot/repl/nfs-mp/r/raeker1",
+      "clients": [
+        {
+          "ip": "141.213.153.172",
+          "host_name": "kermit2.arc.research.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.227.117",
+          "host_name": "conflux-login2.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.25.216",
+          "host_name": "gl-build-hs.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.36.77",
+          "host_name": "globus-xfer1-stor.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.212.173",
+          "host_name": "globus-xfer1.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.36.78",
+          "host_name": "globus-xfer2-stor.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.212.174",
+          "host_name": "globus-xfer2.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.25.216",
+          "host_name": "gl-build-hs.arc-ts.umich.edu",
+          "access": "root"
+        },
+        {
+          "ip": "141.211.192.42",
+          "host_name": "gl-build.arc-ts.umich.edu",
+          "access": "root"
+        }
+      ],
+      "networks": [
+        {
+          "ip": "10.164.0.0/21",
+          "network_name": "CAEN-CAC-SRVR-2",
+          "use": "Flux Ethernet",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.8.0/21",
+          "network_name": "V-ARCTS-GLPROD-PRV",
+          "use": "Great Lakes Production Private IP Ethernet",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.24.0/21",
+          "network_name": "V-ARCTS-GLPROD-IBGW",
+          "use": "Great Lakes Production IPoIB",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.36.64/29",
+          "network_name": "V-ARCTS-GLOBTRB-S-MACC",
+          "use": "Globus transfer nodes for Turbo - Turbo-facing",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.224.72.0/21",
+          "network_name": "V-FLUX-UMNET-2",
+          "use": "Flux IPoIB",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.19.0/27",
+          "network_name": "V-ARCTS-PUBSRVR2",
+          "use": "ARC-TS MDC Public IP Servers #2",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.22.192/27",
+          "network_name": "V-ARCTS-PUBSRVR",
+          "use": "ARC-TS MDC Public IP Servers",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.192.32/27",
+          "network_name": "V-ARCTS-GLPROD-PUB",
+          "use": "Great Lakes Production Public IP Ethernet",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.212.160/29",
+          "network_name": "V-ARCTS-GLOBTRB-MACC",
+          "use": "Globus transfer nodes for Turbo - client-facing",
+          "access": "read, write"
+        }
+      ],
+      "quotas": {
+        "capacity": 8796093022208,
+        "capacityGb": 8192,
+        "capacityTb": 8,
+        "usage": 982462598082,
+        "usageGb": 914.99,
+        "remaining": 7813630424126,
+        "remainingGb": 7277.01,
+        "usagePercent": 11.17,
+        "remainingPercent": 88.83
+      },
+      "snapshotSummary": [
+        {
+          "schedule": {
+            "name": "raeker1-daily",
+            "duration": 604800,
+            "schedule": "Every 1 days at 01:30 AM"
+          },
+          "snapshots": [
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Thu, 10 Aug 2023 06:27:57 GMT",
+              "expires": "Thu, 17 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Fri, 11 Aug 2023 05:59:16 GMT",
+              "expires": "Fri, 18 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Sat, 12 Aug 2023 06:58:49 GMT",
+              "expires": "Sat, 19 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Sun, 13 Aug 2023 06:09:43 GMT",
+              "expires": "Sun, 20 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Mon, 14 Aug 2023 06:42:10 GMT",
+              "expires": "Mon, 21 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Tue, 15 Aug 2023 05:56:28 GMT",
+              "expires": "Tue, 22 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Wed, 16 Aug 2023 05:59:57 GMT",
+              "expires": "Wed, 23 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            }
+          ],
+          "stats": {
+            "snapshotsTotal": 1376256,
+            "snapshotsTotalGb": 0,
+            "snapshotPercentOfCapacity": 0
+          }
+        }
+      ],
+      "foundInSrs": true,
+      "hasSensitiveData": false,
+      "replication": true,
+      "billing": [
+        {
+          "size": 8,
+          "shortcode": "UMRCP",
+          "cost": 1249.92
+        }
+      ],
+      "cost": 1249.92,
+      "resource": {
+        "id": "00",
+        "name": "raeker1",
+        "category": "storage",
+        "service": "turbo",
+        "users": []
+      },
+      "multiprotocol": false,
+      "mountPath": {
+        "nfs": "raeker1.turbo.storage.umich.edu:/raeker1"
+      },
+      "isFulfilled": true
+    },
+    {
+      "dn": "cn=arcts-raeker2-turbo,ou=User Groups,ou=Groups,dc=umich,dc=edu",
+      "cn": [
+        "arcts-raeker2-turbo",
+        "arcts-raeker1-turbo-raeker2"
+      ],
+      "gidNumber": "2431081",
+      "groupName": "arcts-raeker1-turbo-raeker2",
+      "description": "User group for access to the raeker2 multiprotocol turbo volume.",
+      "mcommunityUsers": {
+        "users": [
+          "adnanzai",
+          "brockp",
+          "cmarisol",
+          "jshelly",
+          "mmatola",
+          "msbritt",
+          "raeker",
+          "raekersw",
+          "wgx",
+          "whatitis"
+        ],
+        "allSubgroups": [
+          "arcts-helpdesk",
+          "arcts-raeker1-admins"
+        ],
+        "subgroups": []
+      },
+      "turboVolName": "raeker2",
+      "isAdmin": true,
+      "multiZones": [
+        {
+          "nfsAlias": "/raeker2",
+          "volPath": "/ifs/macc-turbo2/mcomm-adsroot/norepl/nfs-mp/r/raeker2",
+          "zone": "mcomm-adsroot"
+        }
+      ],
+      "nfsAlias": "/raeker2",
+      "volPath": "/ifs/macc-turbo2/mcomm-adsroot/norepl/nfs-mp/r/raeker2",
+      "clients": [
+        {
+          "ip": "10.164.36.70",
+          "host_name": "globus-phi-xfer1-stor.arc-ts.umich.edu",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.164.36.69",
+          "host_name": "globus-phi-xfer2-stor.arc-ts.umich.edu",
+          "access": "read, write"
+        }
+      ],
+      "networks": [
+        {
+          "ip": "10.224.37.0/24",
+          "network_name": "V-ARCTS-ARMIS",
+          "use": "Armis/Armis2 Ethernet",
+          "access": "read, write"
+        },
+        {
+          "ip": "10.246.1.0/24",
+          "network_name": "V-ARCTS-ARMIS-IB",
+          "use": "Armis/Armis2 IPoIB",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.19.0/27",
+          "network_name": "V-ARCTS-PUBSRVR2",
+          "use": "ARC-TS MDC Public IP Servers #2",
+          "access": "read, write"
+        },
+        {
+          "ip": "141.211.22.192/27",
+          "network_name": "V-ARCTS-PUBSRVR",
+          "use": "ARC-TS MDC Public IP Servers",
+          "access": "read, write"
+        }
+      ],
+      "smbShare": "raeker2",
+      "quotas": {
+        "capacity": 5497558138880,
+        "capacityGb": 5120,
+        "capacityTb": 5,
+        "usage": 149543288593,
+        "usageGb": 139.27,
+        "remaining": 5348014850287,
+        "remainingGb": 4980.73,
+        "usagePercent": 2.72,
+        "remainingPercent": 97.28
+      },
+      "snapshotSummary": [
+        {
+          "schedule": {
+            "name": "raeker2-daily",
+            "duration": 604800,
+            "schedule": "Every 1 days at 01:30 AM"
+          },
+          "snapshots": [
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Thu, 10 Aug 2023 06:27:05 GMT",
+              "expires": "Thu, 17 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Fri, 11 Aug 2023 05:59:11 GMT",
+              "expires": "Fri, 18 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Sat, 12 Aug 2023 06:58:13 GMT",
+              "expires": "Sat, 19 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Sun, 13 Aug 2023 06:09:37 GMT",
+              "expires": "Sun, 20 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Mon, 14 Aug 2023 06:41:44 GMT",
+              "expires": "Mon, 21 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Tue, 15 Aug 2023 05:56:26 GMT",
+              "expires": "Tue, 22 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            },
+            {
+              "size": 196608,
+              "sizeGb": 0,
+              "created": "Wed, 16 Aug 2023 05:59:53 GMT",
+              "expires": "Wed, 23 Aug 2023 05:30:00 GMT",
+              "percentOfCapacity": 1.253266268541608e-9
+            }
+          ],
+          "stats": {
+            "snapshotsTotal": 1376256,
+            "snapshotsTotalGb": 0,
+            "snapshotPercentOfCapacity": 0
+          }
+        }
+      ],
+      "foundInSrs": true,
+      "hasSensitiveData": true,
+      "replication": false,
+      "billing": [
+        {
+          "size": 5,
+          "shortcode": "UMRCP",
+          "cost": 389.4
+        }
+      ],
+      "cost": 389.4,
+      "resource": {
+        "id": "00",
+        "name": "raeker2",
+        "category": "storage",
+        "service": "turbo",
+        "users": []
+      },
+      "multiprotocol": true,
+      "mountPath": {
+        "nfs": "raeker2.turbo.storage.umich.edu:/raeker2",
+        "smb": {
+          "windows": "\\\\raeker2-win.turbo.storage.umich.edu\\raeker2",
+          "macs": "smb://raeker2-win.turbo.storage.umich.edu/raeker2"
+        }
+      },
+      "isFulfilled": true
+    }
+  ]

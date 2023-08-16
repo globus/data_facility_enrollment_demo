@@ -1,0 +1,16 @@
+{% extends 'globus-portal-framework/v2/base.html' %}
+
+
+{% block body %}
+
+<div class="jumbotron">
+    <h1 class="display-4">Michigan Onboarding</h1>
+    <p class="lead">This is the onboarding form for ensuring user resources are setup and ready to be used. (We should improve the wording to get more specific)</p>
+    <hr class="my-4">
+    <p>Use the following button to login with University of Michigan and begin the process</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="/login/globus?next=/onboarding/" role="button">Begin Onboarding</a>
+    </p>
+  </div>
+
+  {% endblock %}

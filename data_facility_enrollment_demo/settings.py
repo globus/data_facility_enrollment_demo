@@ -29,6 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+ARC_PROJECT_FILE = BASE_DIR / "data_facility_enrollment_demo/data/projects.json"
+ARC_STORAGE_FILE = BASE_DIR / "data_facility_enrollment_demo/data/storage.json"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -101,25 +104,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
 # This is a general Django setting if views need to redirect to login
 # https://docs.djangoproject.com/en/4.2/ref/settings/#login-url
 LOGIN_URL = "/login/globus"
@@ -137,7 +121,27 @@ SOCIAL_AUTH_GLOBUS_SCOPE = [
 
 SOCIAL_AUTH_GLOBUS_KEY = "<redacted>"
 SOCIAL_AUTH_GLOBUS_SECRET = "<redacted>`"
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "stream": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {"handlers": ["stream"], "level": "INFO"},
+        "django.db.backends": {"handlers": ["stream"], "level": "WARNING"},
+        "globus_portal_framework": {"handlers": ["stream"], "level": "DEBUG"},
+        "data_facility_enrollment_demo": {
+            "handlers": ["stream"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
 
 
 # Internationalization
@@ -161,3 +165,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
+
+try:
+    from data_facility_enrollment_demo.local_settings import *
+except ImportError:
+    contents = """
+        SOCIAL_AUTH_GLOBUS_KEY = "key"
+        SOCIAL_AUTH_GLOBUS_SECRET = "secret"
+    """
+    print(f'Create a file next to your "settings.py" file with the following:\n\n {contents}')
+    raise Exception("Portal Start Failed, please resolve the auth errors first!")

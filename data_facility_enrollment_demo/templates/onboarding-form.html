@@ -1,0 +1,32 @@
+{% load index_template %}
+<form action="{% block checkout_form_action_url %}{% url 'onboarding' %}{% endblock %}" method="post">
+
+  {% csrf_token %}
+  <div class="alert alert-info" role="alert">
+    <h5>UMichigan Onboarding</h5>
+
+    <p>
+      Use this form to ensure you have access to use the University of Michigan ARC resources.
+    </p>
+
+  </div>
+  <input name="manifest" value="{{concierge_manifest.id}}" hidden>
+
+  <div class="form-group">
+    <h5>Source Collection</h5>
+    <label for="source_col">Collection UUID</label>
+    <input class="form-control" type="text" id="source_col" name="source_col" value="ddb59aef-6d04-11e5-ba46-22000b92c6ec">
+    <small id="source_col_help" class="form-text text-muted">We will use the above collection if you don't choose another</small>
+
+    <label for="source_path">Collection Path</label>
+    <input class="form-control" type="text" id="source_path" name="source_path" value="/">
+
+  </div>
+
+  <button id="onboarding-submit"
+          type="submit"
+          class="btn mb-2 btn-primary"
+          aria-describedby="transfer-submit-help-block-{{concierge_manifest.id}}"
+  >Submit
+  </button>
+</form>

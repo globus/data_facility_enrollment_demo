@@ -1,0 +1,34 @@
+{% extends 'globus-portal-framework/v2/base.html' %}
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col">
+      <h2 class="text-center">{{project_title}}</h2>
+    </div>
+  </div>
+  
+  <div class="row mb-5">
+    <div class="col"></div>
+    <div class="col-10">
+      <div>
+        <h1 class="text-center">{%block checkout_title%}Michigan Onboarding{%endblock%}</h1>
+        <div class="card">
+          <div class="card-body">
+            {% block manifest_create_form %}
+              {% include 'onboarding-form.html' %}
+            {% endblock %}
+  
+            {% if form.is_bound and form.errors %}
+            <div class="alert alert-danger my-3" role="alert">{{form.errors}}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+
+
+{% endblock %} 
