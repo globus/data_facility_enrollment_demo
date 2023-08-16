@@ -61,10 +61,7 @@ def guest_collection(request):
     }
     if request.method == "POST":
         form = CreateGuestCollectionForm(request.POST)
-<<<<<<< HEAD
-=======
         log.info(f" is form valid ?{form.is_valid()}")
->>>>>>> b9860476f731fc4152dae8a2d01aa5aa623efadb
         if form.is_valid():
             create_search_record(request.session['project_id'], "collectionuuid", request.user)
             # create_acl(request.user)
