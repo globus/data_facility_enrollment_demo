@@ -30,17 +30,17 @@ def lookup_guest_collections(user: User, keyword: str):
     return guest_collections
 
 
-def verify_guest_collection_permissions(user: User, endpoint_id: str, group: str, permissions: str = 'rw'):
+def verify_guest_collection_permissions(user: User, collection_id: str, group: str, permissions: str = 'rw'):
     """ Returns true if the guest collection has an ACL that matches parameters, or false otherwise
     Arguments:
        user -- Django User object
-       identity_id -- Identity UUID for ACL rule
+       collection_id -- Collection id to verify collection permissions
        group -- Group wich is being asserted access
        permissions -- 'rw' for read-write
     """
     transfer_client: TransferClient = load_transfer_client(user)
 
-    acl_rules = transfer_client.endpoint_acl_list(endpoint_id)
+    acl_rules = transfer_client.endpoint_acl_list(collection_id)
     for acl_rule in acl_rules:
         if acl_rule['principal'] == group and acl_rule['permissions'] == permissions:
             return True
@@ -53,13 +53,17 @@ def verify_guest_collection_permissions(user: User, endpoint_id: str, group: str
         "path": "/",
         "permissions": "rw",
     }
-    transfer_client.add_endpoint_acl_rule(endpoint_id, rule_data)
-    log.info(f'Added {group} to collection {endpoint_id}...')
+    transfer_client.add_endpoint_acl_rule(collection_id, rule_data)
+    log.info(f'Added {group} to collection {collection_id}...')
     return True
 
-def verify_guest_collection_keywords(user: User, endpoint_id: str, keyword):
+def verify_guest_collection_keywords(user: User, collection_id: str, keyword):
+    """
+    Ensure guest collection contains keywords. It shouldn't be possible to fail here, since only collections
+    returned in the get function above select for collections containing the required keywords
+    """
     transfer_client: TransferClient = load_transfer_client(user)
-    data = transfer_client.get_endpoint(endpoint_id)
+    data = transfer_client.get_endpoint(collection_id)
 
     if not data['keywords'] or keyword not in data['keywords']:
         raise MissingKeyword('Missing Keyword on collection')
