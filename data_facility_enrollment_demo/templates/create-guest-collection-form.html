@@ -13,11 +13,14 @@
 
   <div class="form-group">
     <h5>Create Guest Collection</h5>
-    <label for="source_col">Choose a guest collection below to use for data storage</label>
+    <label for="source_col">Choose a mapped collection below to use for data storage</label>
     {% for collection in mapped_collections %} 
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="guest_collection" id="guest_collection" value="{{collection.uuid}}">
-        <label class="form-check-label" for="guest_collection">
+        <input class="form-check-input" type="radio" name="mapped_collection_id" id="mapped_collection_id" value="{{collection.mapped_collection_id}}">
+        <input type="hidden" name="storage_gateway_id" id="storage_gateway_id" value="{{collection.storage_gateway_id}}">
+        <input type="hidden" name="endpoint_hostname" id="endpoint_hostname" value="{{collection.endpoint_hostname}}">
+        <input type="hidden" name="endpoint_id" id="endpoint_id" value="{{collection.endpoint_id}}">
+        <label class="form-check-label" for="mapped_collection">
           {{collection.name}}
         </label>
     </div>

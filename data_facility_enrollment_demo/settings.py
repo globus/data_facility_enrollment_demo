@@ -117,6 +117,7 @@ SOCIAL_AUTH_GLOBUS_SCOPE = [
     "email",
     "urn:globus:auth:scope:search.api.globus.org:all",
     "urn:globus:auth:scope:transfer.api.globus.org:all",
+    "urn:globus:auth:scope:5e3096cd-7c9d-44ee-a51d-8d550daefca8:manage_collections[https://auth.globus.org/scopes/a8c6f428-26df-4c50-a3aa-297186605a5f/data_access]"
 ]
 
 SOCIAL_AUTH_GLOBUS_KEY = "<redacted>"
@@ -124,8 +125,19 @@ SOCIAL_AUTH_GLOBUS_SECRET = "<redacted>`"
 SEARCH_INDEX_UUID = "8c47de5e-a969-4912-abd5-c29130ae526e"
 AVAILABLE_MAPPED_COLLECTIONS = [
     {
-        "uuid": "9da7942b-3fae-4ce9-b930-a335e41382cd",
+        "endpoint_id": "9da7942b-3fae-4ce9-b930-a335e41382cd",
+        "mapped_collection_id": "9da7942b-3fae-4ce9-b930-a335e41382cd",
+        "storage_gateway_id": "d8906226-d2ba-4c28-9617-65d3312be551",
+        "endpoint_hostname": "https://3e2848.8443.data.globus.org/api",
         "name": "(Nick's collection) Mock Turbo Active Compute Storage",
+        "tag": "arc_collection",
+    },
+    {
+        "endpoint_id": "5e3096cd-7c9d-44ee-a51d-8d550daefca8",
+        "mapped_collection_id": "a8c6f428-26df-4c50-a3aa-297186605a5f",
+        "storage_gateway_id": "5ed6332a-5e66-49a4-af94-978a7574194b",
+        "endpoint_hostname": "https://1307b1.03c0.data.globus.org/api",
+        "name": "(Steve's collection) Mock Turbo Active Compute Storage",
         "tag": "arc_collection",
     },
 ]
@@ -185,4 +197,5 @@ except ImportError:
     print(
         f'Create a file next to your "settings.py" file with the following:\n\n {contents}'
     )
-    raise Exception("Portal Start Failed, please resolve the auth errors first!")
+    raise Exception(
+        "Portal Start Failed, please resolve the auth errors first!")

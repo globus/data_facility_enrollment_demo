@@ -10,4 +10,5 @@ exec /usr/local/bin/gunicorn data_facility_enrollment_demo.wsgi \
     --bind 0.0.0.0:8000 \
     --workers 2 \
     --log-level info \
+    --reload \
     --chdir /app

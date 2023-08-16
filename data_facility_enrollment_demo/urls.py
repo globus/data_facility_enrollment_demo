@@ -7,7 +7,7 @@ urlpatterns = [
     path("onboarding/", views.onboarding, name="onboarding"),
     path(
         "create_guest_collection/",
-        views.create_guest_collection,
+        views.guest_collection,
         name="create-guest-collection",
     ),
     path("thanks/", views.onboarding_complete, name="onboarding-complete"),

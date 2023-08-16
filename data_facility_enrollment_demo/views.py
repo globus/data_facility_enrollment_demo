@@ -5,12 +5,16 @@ from django.conf import settings
 from data_facility_enrollment_demo.arc_api import ARCClient
 
 from data_facility_enrollment_demo.gcs import (
+    create_guest_collection,
     lookup_guest_collections,
     create_acl,
     verify_valid_guest_collection,
 )
 from data_facility_enrollment_demo.search import create_search_record
-from data_facility_enrollment_demo.forms import OnboardingForm
+from data_facility_enrollment_demo.forms import CreateGuestCollectionForm, OnboardingForm
+
+import logging
+log = logging.getLogger(__name__)
 
 
 def index(request):
@@ -24,7 +28,8 @@ def onboarding(request):
         "projects": arc_client.get_projects(),
         "storage": arc_client.get_storage(),
     }
-    context = {"arc": arc, "guest_collections": lookup_guest_collections(request.user)}
+    context = {"arc": arc,
+               "guest_collections": lookup_guest_collections(request.user)}
 
     if request.method == "POST":
         form = OnboardingForm(request.POST)
@@ -42,18 +47,27 @@ def onboarding(request):
 
 
 @login_required
-def create_guest_collection(request):
+def guest_collection(request):
     context = {
         "mapped_collections": settings.AVAILABLE_MAPPED_COLLECTIONS,
     }
     if request.method == "POST":
-        form = OnboardingForm(request.POST)
+        form = CreateGuestCollectionForm(request.POST)
         if form.is_valid():
             # create_search_record(project_id, collection_id, request.user)
             # create_acl(request.user)
+            create_guest_collection(
+                "Guest Collection",
+                form.cleaned_data["endpoint_hostname"],
+                form.cleaned_data["endpoint_id"],
+                form.cleaned_data["mapped_collection_id"],
+                form.cleaned_data["storage_gateway_id"],
+                request.user)
             return redirect("onboarding-complete")
+        else:
+            log.error(form)
     else:
-        form = OnboardingForm()
+        form = CreateGuestCollectionForm()
     return render(request, "create-guest-collection.html", context)
 
 
