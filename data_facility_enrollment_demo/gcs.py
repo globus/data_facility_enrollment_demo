@@ -29,8 +29,26 @@ def lookup_guest_collections(user: User, keyword="arc_collection"):
     return guest_collections
 
 
-def verify_valid_guest_collection():
-    log.error("We currently do not check if a guest collection has the proper ACL")
+def verify_valid_guest_collection(user: User, identity_id: str, endpoint_id: str, path: str, permissions: str):
+    """ Returns true if the guest collection has an ACL that matches parameters, or false otherwise
+    Arguments:
+       user -- Django User object
+       identity_id -- Identity UUID for ACL rule
+       endpoint_id -- Endpoint/collection UUID
+       path -- Filesystem path (most end with a '/')
+       permissions -- 'r' for read only, 'rw' for read-write
+    """
+    transfer_client: TransferClient = load_transfer_client(user)
+
+    # ACL paths must end with slash
+    if path[-1] != "/":
+        path = path + "/"
+
+    acl_rules = transfer_client.endpoint_acl_list(endpoint_id)
+    for acl_rule in acl_rules:
+        if acl_rule['principal'] == identity_id and acl_rule['path'] == path and acl_rule['permissions'] == permissions:
+            return True
+
     return False
 
 
