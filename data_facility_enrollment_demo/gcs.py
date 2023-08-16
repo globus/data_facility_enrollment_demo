@@ -22,7 +22,7 @@ def lookup_gcs_stuff(user: User, keyword="arc_collection"):
                 and endpoint["keywords"] \
                 and keyword in endpoint["keywords"]:
             guest_collections.append(endpoint["host_endpoint_id"])
-    return {}
+    return guest_collections
 
 
 def create_acl(user: User, identity_id: str, endpoint_id: str, path: str, permissions: str):
