@@ -7,26 +7,50 @@ log = logging.getLogger(__name__)
 from globus_portal_framework.gclients import load_transfer_client
 
 
-def lookup_gcs_stuff(user: User, keyword="arc_collection"):
-    """ Return a list of guest collections that contain the specified keyword
+def lookup_guest_collections(user: User, keyword="arc_collection"):
+    """Return a list of guest collections that contain the specified keyword
     Arguments:
         user -- Django User object
         keyword -- Only return guest collections matches the specified keyword
     """
     transfer_client: TransferClient = load_transfer_client(user)
-    log.info('Looked up GCS Stuff')
     guest_collections = []
     endpoints = transfer_client.endpoint_manager_monitored_endpoints()
     for endpoint in endpoints:
-        if endpoint["entity_type"].endswith("guest_collection") \
-                and endpoint["keywords"] \
-                and keyword in endpoint["keywords"]:
-            guest_collections.append(endpoint["host_endpoint_id"])
+        if (
+            endpoint["entity_type"].endswith("guest_collection")
+            and endpoint["keywords"]
+            and keyword in endpoint["keywords"]
+        ):
+            guest_collections.append(endpoint)
+    log.info(
+        f"Found {len(guest_collections)} available guest collections for {user.username}"
+    )
     return guest_collections
 
 
-def create_acl(user: User, identity_id: str, endpoint_id: str, path: str, permissions: str):
-    """ Create an ACL
+def get_available_mapped_collections():
+    """
+    Get a list of mapped collections which can be used my the app to create guest collections for the user.
+    """
+    return [
+        {
+            "uuid": "9da7942b-3fae-4ce9-b930-a335e41382cd",
+            "name": "(Nick's collection) Mock Turbo Active Compute Storage",
+            "tag": "arc_collection",
+        },
+    ]
+
+
+def verify_valid_guest_collection():
+    log.error("We currently do not check if a guest collection has the proper ACL")
+    return False
+
+
+def create_acl(
+    user: User, identity_id: str, endpoint_id: str, path: str, permissions: str
+):
+    """Create an ACL
 
     Arguments:
         user -- Django User object
@@ -36,7 +60,7 @@ def create_acl(user: User, identity_id: str, endpoint_id: str, path: str, permis
         permissions -- 'r' for read only, 'rw' for read-write
     """
     transfer_client: TransferClient = load_transfer_client(user)
-    log.info('Created GCS ACL')
+    log.info("Created GCS ACL")
 
     # ACL paths must end with slash
     if path[-1] != "/":

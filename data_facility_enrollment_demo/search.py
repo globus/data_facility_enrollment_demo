@@ -6,8 +6,6 @@ from django.contrib.auth.models import User
 log = logging.getLogger(__name__)
 
 
-
 def create_search_record(projectID, collectionID, user: User):
-
     search_client = ConfidentialSearchClient()
     search_client.write_to_index(projectID, collectionID, user.username)

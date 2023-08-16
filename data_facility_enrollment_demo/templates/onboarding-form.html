@@ -10,16 +10,26 @@
     </p>
 
   </div>
-  <input name="manifest" value="{{concierge_manifest.id}}" hidden>
 
   <div class="form-group">
-    <h5>Source Collection</h5>
-    <label for="source_col">Collection UUID</label>
-    <input class="form-control" type="text" id="source_col" name="source_col" value="ddb59aef-6d04-11e5-ba46-22000b92c6ec">
-    <small id="source_col_help" class="form-text text-muted">We will use the above collection if you don't choose another</small>
+    <h5>Guest Collection</h5>
+    <label for="source_col">Choose a guest collection below to use for data storage</label>
 
-    <label for="source_path">Collection Path</label>
-    <input class="form-control" type="text" id="source_path" name="source_path" value="/">
+    {% for collection in guest_collections %} 
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="guest_collection" id="guest_collection" value="{{collection.host_endpoint_id}}">
+        <label class="form-check-label" for="guest_collection">
+          {{collection.display_name}}
+        </label>
+    </div>
+
+    {% endfor %} 
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="guest_collection" id="guest_collection" value="create_new">
+        <label class="form-check-label" for="guest_collection">
+          Create New Guest Collection
+        </label>
+    </div>
 
   </div>
 

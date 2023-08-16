@@ -3,7 +3,12 @@ from django.contrib.auth.decorators import login_required
 
 from data_facility_enrollment_demo.arc_api import ARCClient
 
-from data_facility_enrollment_demo.gcs import lookup_gcs_stuff, create_acl
+from data_facility_enrollment_demo.gcs import (
+    lookup_guest_collections,
+    create_acl,
+    get_available_mapped_collections,
+    verify_valid_guest_collection,
+)
 from data_facility_enrollment_demo.search import create_search_record
 from data_facility_enrollment_demo.forms import OnboardingForm
 
@@ -19,10 +24,28 @@ def onboarding(request):
         "projects": arc_client.get_projects(),
         "storage": arc_client.get_storage(),
     }
-    context = {"arc": arc}
+    context = {"arc": arc, "guest_collections": lookup_guest_collections(request.user)}
 
-    lookup_gcs_stuff(request.user)
+    if request.method == "POST":
+        form = OnboardingForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data["guest_collection"] == "create_new":
+                return redirect("create-guest-collection")
+            elif verify_valid_guest_collection():
+                return redirect("onboarding-complete")
+            else:
+                context["errors"] = "Guest collection is invalid!"
+    else:
+        form = OnboardingForm()
+    context["form"] = form
+    return render(request, "onboarding.html", context)
 
+
+@login_required
+def create_guest_collection(request):
+    context = {
+        "mapped_collections": get_available_mapped_collections(),
+    }
     if request.method == "POST":
         form = OnboardingForm(request.POST)
         if form.is_valid():
@@ -31,8 +54,7 @@ def onboarding(request):
             return redirect("onboarding-complete")
     else:
         form = OnboardingForm()
-    context["form"] = form
-    return render(request, "onboarding.html", context)
+    return render(request, "create-guest-collection.html", context)
 
 
 @login_required

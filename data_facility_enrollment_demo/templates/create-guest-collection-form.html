@@ -1,0 +1,33 @@
+{% load index_template %}
+<form action="{% block checkout_form_action_url %}{% url 'create-guest-collection' %}{% endblock %}" method="post">
+
+  {% csrf_token %}
+  <div class="alert alert-info" role="alert">
+    <h5>UMichigan Onboarding</h5>
+
+    <p>
+      Create a new Guest Collection
+    </p>
+
+  </div>
+
+  <div class="form-group">
+    <h5>Create Guest Collection</h5>
+    <label for="source_col">Choose a guest collection below to use for data storage</label>
+    {% for collection in mapped_collections %} 
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="guest_collection" id="guest_collection" value="{{collection.uuid}}">
+        <label class="form-check-label" for="guest_collection">
+          {{collection.name}}
+        </label>
+    </div>
+    {% endfor %} 
+  </div>
+
+  <button id="onboarding-submit"
+          type="submit"
+          class="btn mb-2 btn-primary"
+          aria-describedby="transfer-submit-help-block-{{concierge_manifest.id}}"
+  >Create New Guest Collection
+  </button>
+</form>

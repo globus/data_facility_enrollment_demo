@@ -17,11 +17,11 @@
         <div class="card">
           <div class="card-body">
             {% block manifest_create_form %}
-              {% include 'onboarding-form.html' %}
+              {% include 'create-guest-collection-form.html' %}
             {% endblock %}
   
-            {% if form.is_bound and form.errors or errors %}
-            <div class="alert alert-danger my-3" role="alert">{{form.errors}}{{errors}}</div>
+            {% if form.is_bound and form.errors %}
+            <div class="alert alert-danger my-3" role="alert">{{form.errors}}</div>
             {% endif %}
           </div>
         </div>
