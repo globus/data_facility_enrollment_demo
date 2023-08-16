@@ -5,10 +5,10 @@ from data_facility_enrollment_demo.arc_api import ARCClient
 
 from data_facility_enrollment_demo.gcs import lookup_gcs_stuff, create_acl
 from data_facility_enrollment_demo.search import create_search_record
+from data_facility_enrollment_demo.forms import OnboardingForm
 
 
 def index(request):
-
     return render(request, "index.html", {})
 
 
@@ -24,10 +24,14 @@ def onboarding(request):
     lookup_gcs_stuff(request.user)
 
     if request.method == "POST":
-        create_search_record(request.user)
-        create_acl(request.user)
-        return redirect("onboarding-complete")
-
+        form = OnboardingForm(request.POST)
+        if form.is_valid():
+            # create_search_record(request.user)
+            # create_acl(request.user)
+            return redirect("onboarding-complete")
+    else:
+        form = OnboardingForm()
+    context["form"] = form
     return render(request, "onboarding.html", context)
 
 

@@ -173,5 +173,7 @@ except ImportError:
         SOCIAL_AUTH_GLOBUS_KEY = "key"
         SOCIAL_AUTH_GLOBUS_SECRET = "secret"
     """
-    print(f'Create a file next to your "settings.py" file with the following:\n\n {contents}')
+    print(
+        f'Create a file next to your "settings.py" file with the following:\n\n {contents}'
+    )
     raise Exception("Portal Start Failed, please resolve the auth errors first!")
