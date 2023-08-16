@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -7,10 +8,14 @@ from data_facility_enrollment_demo.arc_api import ARCClient
 from data_facility_enrollment_demo.gcs import (
     lookup_guest_collections,
     create_acl,
-    verify_valid_guest_collection,
+    verify_guest_collection_permissions,
+    verify_guest_collection_keywords,
 )
 from data_facility_enrollment_demo.search import create_search_record
 from data_facility_enrollment_demo.forms import OnboardingForm
+from data_facility_enrollment_demo.exc import MissingKeyword
+
+log = logging.getLogger(__name__)
 
 
 def index(request):
@@ -24,17 +29,21 @@ def onboarding(request):
         "projects": arc_client.get_projects(),
         "storage": arc_client.get_storage(),
     }
-    context = {"arc": arc, "guest_collections": lookup_guest_collections(request.user)}
+    context = {"arc": arc, "guest_collections": lookup_guest_collections(request.user, settings.GUEST_COLLECTION_REQUIRED_KEYWORD)}
 
     if request.method == "POST":
         form = OnboardingForm(request.POST)
         if form.is_valid():
             if form.cleaned_data["guest_collection"] == "create_new":
                 return redirect("create-guest-collection")
-            elif verify_valid_guest_collection(request.user, form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_GROUP):
+            try:
+                verify_guest_collection_permissions(request.user, form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_GROUP)
+                verify_guest_collection_keywords(request.user,  form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_KEYWORD)
                 return redirect("onboarding-complete")
-            else:
-                context["errors"] = "Guest collection is invalid!"
+            except MissingKeyword as mk:
+                log.error(mk)
+                context['errors'] = mk
+                context['error_link'] = f'https://app.globus.org/file-manager/collections/{form.cleaned_data["guest_collection"]}/overview'
     else:
         form = OnboardingForm()
     context["form"] = form

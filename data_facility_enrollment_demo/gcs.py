@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 log = logging.getLogger(__name__)
 
 from globus_portal_framework.gclients import load_transfer_client
+from data_facility_enrollment_demo.exc import MissingKeyword
 
 
-def lookup_guest_collections(user: User, keyword="arc_collection"):
+def lookup_guest_collections(user: User, keyword: str):
     """Return a list of guest collections that contain the specified keyword
     Arguments:
         user -- Django User object
@@ -29,7 +30,7 @@ def lookup_guest_collections(user: User, keyword="arc_collection"):
     return guest_collections
 
 
-def verify_valid_guest_collection(user: User, endpoint_id: str, group: str, permissions: str = 'rw'):
+def verify_guest_collection_permissions(user: User, endpoint_id: str, group: str, permissions: str = 'rw'):
     """ Returns true if the guest collection has an ACL that matches parameters, or false otherwise
     Arguments:
        user -- Django User object
@@ -56,6 +57,12 @@ def verify_valid_guest_collection(user: User, endpoint_id: str, group: str, perm
     log.info(f'Added {group} to collection {endpoint_id}...')
     return True
 
+def verify_guest_collection_keywords(user: User, endpoint_id: str, keyword):
+    transfer_client: TransferClient = load_transfer_client(user)
+    data = transfer_client.get_endpoint(endpoint_id)
+
+    if not data['keywords'] or keyword not in data['keywords']:
+        raise MissingKeyword('Missing Keyword on collection')
 
 def create_acl(
     user: User, identity_id: str, endpoint_id: str, path: str, permissions: str
