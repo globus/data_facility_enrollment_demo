@@ -1,0 +1,12 @@
+version: "3"
+
+volumes:
+  postgres_data: {}
+  postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
