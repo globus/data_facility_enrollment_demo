@@ -1,3 +1,7 @@
+### Local settings
+
+data_facility_enrollment_demo/local_settings.py
+
 ### Python template
 
 *.sqlite*
