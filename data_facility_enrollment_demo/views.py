@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from data_facility_enrollment_demo.arc_api import ARCClient
 
+from data_facility_enrollment_demo.gcs import lookup_gcs_stuff, create_acl
+from data_facility_enrollment_demo.search import create_search_record
+
 
 def onboarding(request):
     arc_client = ARCClient(request.user)
@@ -10,7 +13,11 @@ def onboarding(request):
     }
     context = {"arc": arc}
 
+    lookup_gcs_stuff(request.user)
+
     if request.method == "POST":
+        create_search_record(request.user)
+        create_acl(request.user)
         return redirect("onboarding-complete")
 
     return render(request, "onboarding.html", context)
