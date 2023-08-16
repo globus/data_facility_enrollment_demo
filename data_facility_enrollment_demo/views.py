@@ -26,7 +26,7 @@ def onboarding(request):
     if request.method == "POST":
         form = OnboardingForm(request.POST)
         if form.is_valid():
-            # create_search_record(request.user)
+            # create_search_record(project_id, collection_id, request.user)
             # create_acl(request.user)
             return redirect("onboarding-complete")
     else:

@@ -121,6 +121,7 @@ SOCIAL_AUTH_GLOBUS_SCOPE = [
 
 SOCIAL_AUTH_GLOBUS_KEY = "<redacted>"
 SOCIAL_AUTH_GLOBUS_SECRET = "<redacted>`"
+SEARCH_INDEX_UUID = '8c47de5e-a969-4912-abd5-c29130ae526e'
 
 LOGGING = {
     "version": 1,
