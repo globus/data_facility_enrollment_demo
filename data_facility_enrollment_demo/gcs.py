@@ -7,17 +7,28 @@ log = logging.getLogger(__name__)
 from globus_portal_framework.gclients import load_transfer_client
 
 
-def lookup_gcs_stuff(user: User):
-
+def lookup_gcs_stuff(user: User, keyword="arc_collection"):
+    """ Return a list of guest collections that contain the specified keyword
+    Arguments:
+        user -- Django User object
+        keyword -- Only return guest collections matches the specified keyword
+    """
     transfer_client: TransferClient = load_transfer_client(user)
     log.info('Looked up GCS Stuff')
+    guest_collections = []
+    endpoints = transfer_client.endpoint_manager_monitored_endpoints()
+    for endpoint in endpoints:
+        if endpoint["entity_type"].endswith("guest_collection") \
+                and endpoint["keywords"] \
+                and keyword in endpoint["keywords"]:
+            guest_collections.append(endpoint["host_endpoint_id"])
     return {}
 
 
 def create_acl(user: User, identity_id: str, endpoint_id: str, path: str, permissions: str):
     """ Create an ACL
 
-    Keyword arguments:
+    Arguments:
         user -- Django User object
         identity_id -- Identity UUID for ACL rule
         endpoint_id -- Endpoint/collection UUID
