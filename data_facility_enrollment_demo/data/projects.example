@@ -1,0 +1,44 @@
+
+[
+    {
+    "projectName": "raeker1",
+    "description": "Test portal management of ARCTS resources",
+    "isAdmin": true,
+    "admins": [
+        "brockp",
+        "cmarisol",
+        "jophill",
+        "jshelly",
+        "mmatola",
+        "raeker",
+        "richeym",
+        "wgx",
+        "whatitis",
+        "blau@globusid.org"
+    ],
+    "adminGroups": [
+        "arcts-helpdesk"
+    ],
+    "dn": "cn=arcts-raeker1-admins,ou=User Groups,ou=Groups,dc=umich,dc=edu",
+    "resources": [
+        "great-lakes",
+        "turbo",
+        "armis",
+        "data-den"
+    ]
+    },
+    {
+    "projectName": "ragunath",
+    "isAdmin": false,
+    "admins": [
+        "ragunath"
+    ],
+    "adminGroups": [
+        "HITS-RAAC-HPC-Support"
+    ],
+    "dn": "cn=arcts-ragunath-admins,ou=User Groups,ou=Groups,dc=umich,dc=edu",
+    "resources": [
+        "turbo"
+    ]
+    }
+]

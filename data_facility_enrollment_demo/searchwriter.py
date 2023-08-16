@@ -42,7 +42,8 @@ class ConfidentialSearchClient:
                 "content": {
                     "projectID": project_id,
                     "collectionID": collection_uuid,
-                    "timestamp": time.time()
+                    "timestamp": time.time(),
+                    "uniquename": uniquename
                 }
             }
         }

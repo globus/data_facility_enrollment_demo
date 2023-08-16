@@ -13,10 +13,10 @@ from data_facility_enrollment_demo.gcs import (
 )
 from data_facility_enrollment_demo.search import create_search_record
 from data_facility_enrollment_demo.forms import OnboardingForm
+from data_facility_enrollment_demo.forms import CreateGuestCollectionForm
 from data_facility_enrollment_demo.exc import MissingKeyword
 
 log = logging.getLogger(__name__)
-
 
 def index(request):
     return render(request, "index.html", {})
@@ -29,11 +29,12 @@ def onboarding(request):
         "projects": arc_client.get_projects(),
         "storage": arc_client.get_storage(),
     }
-    context = {"arc": arc, "guest_collections": lookup_guest_collections(request.user, settings.GUEST_COLLECTION_REQUIRED_KEYWORD)}
+    context = {"arc": arc, "projects": arc["projects"], "guest_collections": lookup_guest_collections(request.user, settings.GUEST_COLLECTION_REQUIRED_KEYWORD)}
 
     if request.method == "POST":
         form = OnboardingForm(request.POST)
         if form.is_valid():
+            request.session['project_id'] = form.cleaned_data["project"]
             if form.cleaned_data["guest_collection"] == "create_new":
                 return redirect("create-guest-collection")
             try:
@@ -56,9 +57,10 @@ def create_guest_collection(request):
         "mapped_collections": settings.AVAILABLE_MAPPED_COLLECTIONS,
     }
     if request.method == "POST":
-        form = OnboardingForm(request.POST)
+        form = CreateGuestCollectionForm(request.POST)
+        log.info(f" is form valid ?{form.is_valid()}")
         if form.is_valid():
-            # create_search_record(project_id, collection_id, request.user)
+            create_search_record(request.session['project_id'], "collectionuuid", request.user)
             # create_acl(request.user)
             return redirect("onboarding-complete")
     else:
