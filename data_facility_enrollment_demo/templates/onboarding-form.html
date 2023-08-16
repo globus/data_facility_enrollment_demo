@@ -1,0 +1,98 @@
+{% load index_template %}
+<form action="{% block checkout_form_action_url %}{% url 'onboarding' %}{% endblock %}" method="post">
+  <!--  Originally, "name" was the manifest name. We're still passing it as a hack, but
+  this is simply discarded. If we can refactor serach collectors to not need this,
+  we can discard the name field. -->
+  <input name="name" value="data_reprocessing" hidden>
+  <input name="search_url" value="{{form.search_url.value}}" hidden>
+  <input name="index" value="{{form.index.value}}" hidden>
+  <input name="project" value="{{form.project.value}}" hidden>
+  <input name="query" value="{{form.query.value}}" hidden>
+  <input name="filters" value="{{form.filters.value}}" hidden>
+  {% csrf_token %}
+  <div class="alert alert-info" role="alert">
+    <h5>UMichigan Onboarding</h5>
+
+    <p>
+      Use this form to ensure you have access to use the University of Michigan ARC resources.
+    </p>
+
+  </div>
+  <input name="manifest" value="{{concierge_manifest.id}}" hidden>
+
+  <div class="form-group">
+    <h5>Source Collection</h5>
+    <label for="source_col">Collection UUID</label>
+    <input class="form-control" type="text" id="source_col" name="source_col" value="ddb59aef-6d04-11e5-ba46-22000b92c6ec">
+    <small id="qmapPathHelp" class="form-text text-muted">We will use the above collection if you don't choose another</small>
+
+    <label for="source_path">Collection Path</label>
+    <input class="form-control" type="text" id="source_path" name="source_path" value="/">
+
+  </div>
+
+  <!-- <div class="form-group">
+    <h5>Results Processing</h5>
+    <label for="reprocessing_suffix">Suffix</label>
+    <input class="form-control" type="text" id="reprocessing_suffix" name="reprocessing_suffix" value="-reproc_{{concierge_manifest.search_collection.name}}">
+    <small id="reprocessingSuffixHelp" class="form-text text-muted">Adds a new suffix to each reprocessed search result.</small>
+  </div> -->
+
+  {% block checkout_subject_selection %}
+  <h5>Select Records</h5>
+  <div class="accordion" id="accordion-main-checkout">
+    <div class="form-group">
+      <div class="form-check mb-4">
+        <div class="input-group">
+          <input class="form-check-input" type="checkbox" id="form-input-checkall" onclick="selectAllCheckboxes('subject-checkbox', this)" aria-describedby="publishHelpBlock" checked>
+          <label class="form-check-label" style="min-width: 25%" for="form-input-checkall">Select All</label>
+        </div>
+      </div>
+      {% for result in form.get_search_collector.process_search_data.search_results %}
+      <div class="form-check my-1">
+        <div class="input-group">
+          <input class="form-check-input subject-checkbox" type="checkbox" name="subjects"
+                 id="form-input-search-record-{{forloop.counter}}" value="{{result.subject}}"
+                 aria-describedby="publishHelpBlock"
+                 {% if not form.subjects.value or result.subject in form.subjects.value %} checked{% endif %}
+          >
+          <label class="form-check-label" style="min-width: 30%" for="form-input-search-record-{{forloop.counter}}">{{result.title|truncatechars:100}}</label>
+          <div>
+            <button type="button" class="btn btn-primary btn-sm ml-1 py-0" data-toggle="collapse" data-target="#collapse-search-record-{{forloop.counter}}" aria-expanded="true" aria-controls="collapse-search-record-{{forloop.counter}}">
+              <i class="fas fa-info-circle"></i><span class="pl-2">Info</span>
+            </button>
+          </div>
+        </div>
+        <div id="collapse-search-record-{{forloop.counter}}" class="collapse" aria-labelledby="heading-search-record-{{forloop.counter}}" data-parent="#accordion-main-checkout">
+          <div class="card-body">
+            {# include 'xpcs/globus-portal-framework/v2/components/search-result.html' #}
+          </div>
+        </div>
+      </div>
+      <hr class="my-0">
+      {% empty %}
+      {% block checkout_form_no_search_results %}
+      <div class="alert alert-info" role="alert">
+        <h5>No Search Results</h5>
+
+        <p>
+          No valid search results could be found.
+        </p>
+
+      </div>
+      {% endblock %}
+      {% endfor %}
+
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block form_extras %}
+  {% endblock %}
+  <button id="transfer-submit-block-{{concierge_manifest.id}}"
+          type="submit"
+          class="btn mb-2 btn-primary"
+          aria-describedby="transfer-submit-help-block-{{concierge_manifest.id}}"
+  >Reprocess All Datasets
+  </button>
+</form>
