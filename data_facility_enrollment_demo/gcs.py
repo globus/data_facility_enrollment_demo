@@ -174,3 +174,4 @@ def create_guest_collection(
         mapped_collection_id=mapped_collection_id,
     )
     response = client.create_collection(collection_document)
+    return response["data"]["connector_id"]
