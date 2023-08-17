@@ -20,6 +20,7 @@ from data_facility_enrollment_demo.exc import MissingKeyword
 
 log = logging.getLogger(__name__)
 
+
 def index(request):
     return render(request, "index.html", {})
 
@@ -32,7 +33,8 @@ def onboarding(request):
         "storage": arc_client.get_storage(),
     }
 
-    context = {"arc": arc, "projects": arc["projects"], "guest_collections": lookup_guest_collections(request.user, settings.GUEST_COLLECTION_REQUIRED_KEYWORD)}
+    context = {"arc": arc, "projects": arc["projects"], "guest_collections": lookup_guest_collections(
+        request.user, settings.GUEST_COLLECTION_REQUIRED_KEYWORD)}
 
     if request.method == "POST":
         form = OnboardingForm(request.POST)
@@ -41,8 +43,10 @@ def onboarding(request):
             if form.cleaned_data["guest_collection"] == "create_new":
                 return redirect("create-guest-collection")
             try:
-                verify_guest_collection_permissions(request.user, form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_GROUP)
-                verify_guest_collection_keywords(request.user,  form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_KEYWORD)
+                verify_guest_collection_permissions(
+                    request.user, form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_GROUP)
+                verify_guest_collection_keywords(
+                    request.user,  form.cleaned_data["guest_collection"], settings.GUEST_COLLECTION_REQUIRED_KEYWORD)
                 return redirect("onboarding-complete")
             except MissingKeyword as mk:
                 log.error(mk)
@@ -61,12 +65,10 @@ def guest_collection(request):
     }
     if request.method == "POST":
         form = CreateGuestCollectionForm(request.POST)
-<<<<<<< HEAD
-=======
         log.info(f" is form valid ?{form.is_valid()}")
->>>>>>> b9860476f731fc4152dae8a2d01aa5aa623efadb
         if form.is_valid():
-            create_search_record(request.session['project_id'], "collectionuuid", request.user)
+            create_search_record(
+                request.session['project_id'], "collectionuuid", request.user)
             # create_acl(request.user)
             create_guest_collection(
                 "Guest Collection",
