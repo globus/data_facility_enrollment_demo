@@ -174,4 +174,6 @@ def create_guest_collection(
         mapped_collection_id=mapped_collection_id,
     )
     response = client.create_collection(collection_document)
-    return response["data"]["connector_id"]
+    verify_guest_collection_permissions(
+        user, response["id"], settings.GUEST_COLLECTION_REQUIRED_GROUP)
+    return response["id"]
