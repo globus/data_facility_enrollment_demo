@@ -63,15 +63,15 @@ def guest_collection(request):
         form = CreateGuestCollectionForm(request.POST)
         log.info(f" is form valid ?{form.is_valid()}")
         if form.is_valid():
-            create_search_record(request.session['project_id'], "collectionuuid", request.user)
             # create_acl(request.user)
-            create_guest_collection(
+            collection_id = create_guest_collection(
                 "Guest Collection",
                 form.cleaned_data["endpoint_hostname"],
                 form.cleaned_data["endpoint_id"],
                 form.cleaned_data["mapped_collection_id"],
                 form.cleaned_data["storage_gateway_id"],
                 request.user)
+            create_search_record(request.session['project_id'], collection_id, request.user)
             return redirect("onboarding-complete")
         else:
             log.error(form)
