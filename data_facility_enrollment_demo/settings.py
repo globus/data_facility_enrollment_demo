@@ -144,6 +144,24 @@ AVAILABLE_MAPPED_COLLECTIONS = [
 GUEST_COLLECTION_REQUIRED_GROUP = "160aac2d-3c58-11ee-a544-6b4261604b9c"
 GUEST_COLLECTION_REQUIRED_KEYWORD = "arc_collection"
 
+SEARCH_INDEXES = {
+    'user-enrollment': {
+        'uuid': SEARCH_INDEX_UUID,
+        'name': 'DATA Enrolement Index',
+        'fields': [],
+        'facets': [
+            {
+                "name": "Project",
+                "field_name": "projectID",
+            },
+            {
+                "name": "User",
+                "field_name": "uniquename",
+            }
+        ],
+    }
+}
+
 
 LOGGING = {
     "version": 1,
