@@ -2,6 +2,7 @@ import logging
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from globus_portal_framework.views.generic import SearchView
 
 from data_facility_enrollment_demo.arc_api import ARCClient
 
@@ -91,3 +92,21 @@ def guest_collection(request):
 def onboarding_complete(request):
     context = {}
     return render(request, "onboarding-complete.html", context)
+
+
+class AuthorizedSearchView(SearchView):
+    """
+    Search view, primarily for viewing the catalog of enrolled users. This modified view denys all users who are not
+    Django staff users. Use the following to add new staff members:
+
+        python manage.py add_super_user --users me@university.edu
+
+    """
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            log.warning(
+                f"User {request.user} attempted to access {request.get_full_path()} without authorization."
+            )
+            return redirect("index")
+        return super().get(request, *args, **kwargs)
